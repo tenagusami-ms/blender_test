@@ -9,7 +9,8 @@ import bpy
 def main() -> None:
     clear_meshes()
     # test1()
-    test2()
+    # test2()
+    test3()
 
 
 def test1() -> None:
@@ -27,6 +28,22 @@ def test2() -> None:
                                      0.0) for i in range(n_objects)]
     for coordinate in coordinates:
         bpy.ops.mesh.primitive_ico_sphere_add(location=coordinate, radius=radius, subdivisions=5)
+
+
+def test3() -> None:
+    mat1 = bpy.data.materials.new('Red')
+    mat1.diffuse_color = (1.0, 0.0, 0.0, 1.0)
+
+    # 材質の定義(青色)
+    mat2 = bpy.data.materials.new('blue')
+    mat2.diffuse_color = (0.0, 0.0, 1.0, 1.0)
+
+    bpy.ops.mesh.primitive_ico_sphere_add(location=(0, 0, 1), radius=0.5, subdivisions=5)
+    bpy.context.object.data.materials.append(mat1)
+
+    bpy.ops.mesh.primitive_cube_add(location=(0, -0.5, 0), size=2.5)
+    bpy.ops.transform.resize(value=(2.0, 2.0, 0.05))  # 図形を変形(X方向2倍、Y方向2倍、厚さ方向0.05倍)
+    bpy.context.object.data.materials.append(mat2)  # 材質(青)指定
 
 
 def clear_meshes() -> None:
